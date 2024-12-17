@@ -40,6 +40,17 @@ namespace I3jiad.Common.Core.Extensions
         }
 
 
+        /// <summary>
+        /// Возвратить из строки все заглавные буквы.
+        /// </summary>
+        /// <param name="str">Исходная строка.</param>
+        /// <returns></returns>
+        public static string GetUpperCaseChars(this string str)
+            => str.IsEmpty()
+                ? str 
+                : new string(str.Where(char.IsUpper).ToArray());
+
+
         //###########################################################################################################################
         #region ВЫБОР ИЗ СТРОКИ НЕ ЦИФР
 
@@ -84,6 +95,29 @@ namespace I3jiad.Common.Core.Extensions
                     .Cast<Match>()
                     .Select(match => match.Value);
 
+
+        /// <summary>
+        /// Получить из строки первую группу подряд идущих цифр (например, из строки "а28о-с53р" получить 28).
+        /// </summary>
+        /// <param name="str">Исходная строка.</param>
+        /// <returns>Строка, содержащая цифры.</returns>
+        public static string GetFirstDigits(this string str)
+            => str.IsEmpty()
+                ? str
+                : str.ToPositiveDigitsList().FirstOrDefault()
+                    ?? string.Empty;
+
+
+        /// <summary>
+        /// Получить из строки последнюю группу подряд идущих цифр (например, из строки "а28о-с53р" получить 53).
+        /// </summary>
+        /// <param name="str">Исходная строка.</param>
+        /// <returns>Строка, содержащая цифры или пустая строка.</returns>
+        public static string GetLastDigits(this string str)
+            => str.IsEmpty()
+                ? str
+                : str.ToPositiveDigitsList().LastOrDefault()
+                    ?? string.Empty;
 
         #endregion // ВЫБОР ИЗ СТРОКИ ЦИФР
 
