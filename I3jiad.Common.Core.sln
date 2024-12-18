@@ -1,13 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35527.113 d17.12
+VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I3jiad.Common.Core", "I3jiad.Common.Core.csproj", "{5131BBA7-661E-4425-A3E5-791FACDC091D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7F4291C4-1F11-4B0E-81D0-95C4F4C31622}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I3jiad.Common.Core.NUnitTests", "..\Tests\I3jiad.Common.Core.NUnitTests\I3jiad.Common.Core.NUnitTests.csproj", "{90E6E79E-A822-440D-B2D2-21A00A04F664}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "I3jiad.Test.ConsoleApp", "..\Tests\I3jiad.Test.ConsoleApp\I3jiad.Test.ConsoleApp.csproj", "{786B4500-6F8B-47E1-8188-AE648D62886B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,11 +25,16 @@ Global
 		{90E6E79E-A822-440D-B2D2-21A00A04F664}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{90E6E79E-A822-440D-B2D2-21A00A04F664}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{90E6E79E-A822-440D-B2D2-21A00A04F664}.Release|Any CPU.Build.0 = Release|Any CPU
+		{786B4500-6F8B-47E1-8188-AE648D62886B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{786B4500-6F8B-47E1-8188-AE648D62886B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{786B4500-6F8B-47E1-8188-AE648D62886B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{786B4500-6F8B-47E1-8188-AE648D62886B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{90E6E79E-A822-440D-B2D2-21A00A04F664} = {7F4291C4-1F11-4B0E-81D0-95C4F4C31622}
+		{786B4500-6F8B-47E1-8188-AE648D62886B} = {7F4291C4-1F11-4B0E-81D0-95C4F4C31622}
 	EndGlobalSection
 EndGlobal

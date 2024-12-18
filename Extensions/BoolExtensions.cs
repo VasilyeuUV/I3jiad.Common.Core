@@ -59,6 +59,6 @@ namespace I3jiad.Common.Core.Extensions
         public static bool ToBool<T>(this T? value)
             where T : struct, IComparable, IConvertible, IFormattable
             => value.HasValue
-                && value.ToBool();
+                && value.Value.ToBool();
     }
 }
