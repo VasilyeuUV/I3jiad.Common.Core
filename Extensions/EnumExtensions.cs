@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 
 namespace I3jiad.Common.Core.Extensions
 {
@@ -57,15 +59,93 @@ namespace I3jiad.Common.Core.Extensions
              : Enum.TryParse(value?.ToString(), isIgnoreCase, out TEnum enumValue) && enumValue.HasEnumValue<TEnum>(isIgnoreCase) ? enumValue
              : defaultValue != null ? defaultValue.Value
              : throw new ArgumentException($"Can't convert {nameof(value)} to Enum {typeof(TEnum)}", nameof(value));
+
+
+        /// <summary>
+        /// Возвращает список значений перечисления.
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="enumValue"></param>
+        /// <returns></returns>
+        public static IEnumerable<TEnum> GetValues<TEnum>(this TEnum enumValue)
+            where TEnum : Enum
+            => Enum.GetValues(typeof(TEnum))
+                .Cast<TEnum>();
+
+
+
+
+        //###########################################################################################################################
+        #region ПЕРЕЧИСЛЕНИЯ С [FLAG]
+
+        /// <summary>
+        /// Convert a complex enum (with flag) to a list of simple enums<br />
+        /// (Преобразование сложного перечисления (с флагом) к списку простых перечислений).
+        /// </summary>
+        /// <typeparam name="TEnum">Enum type (Тип перечисления).</typeparam>
+        /// <param name="enumValue">Enum value (Значение перечисления).</param>
+        /// <returns>Enumerable of enum values (Список значений перечисления).</returns>
+        public static IEnumerable<TEnum> ToEnumList<TEnum>(this TEnum enumValue)
+             where TEnum : Enum
+        {
+            List<TEnum> enumList = enumValue.GetValues()
+                .Where(en => enumValue.HasFlag(en))
+                .ToList();
+
+            return enumList is null ? Enumerable.Empty<TEnum>()
+                : enumList.Count > 1 ? enumList
+                                        .Where(en => !en.ToString().Equals(_none, StringComparison.OrdinalIgnoreCase)
+                                                    && !en.ToString().Equals(_undefined, StringComparison.OrdinalIgnoreCase))
+                : enumList;
+        }
+
+
+        /// <summary>
+        /// Convert a enum with a flag to a list of enum value names.<br/>
+        /// (Преобразование перечисления с флагом к списку названий значений перечислений).
+        /// </summary>
+        /// <typeparam name="TEnum">Enum type (Тип перечисления).</typeparam>
+        /// <param name="enumValue">Enum value (Значение перечисления).</param>
+        /// <returns>String list (Коллекцию строк).</returns>
+        public static IEnumerable<string> ToEnumStringList<TEnum>(this TEnum enumValue)
+            where TEnum : Enum
+            => enumValue.ToEnumList()
+                .Select(en => en.ToString());
+
+        #endregion // ПЕРЕЧИСЛЕНИЯ С [FLAG]
+
+
+
+        //###########################################################################################################################
+        #region РАБОТА С АТТРИБУТАМИ
+
+        /// <summary>
+        /// Get the value of an enum attribute (Получить значение атрибута перечисления).
+        /// </summary>
+        /// <typeparam name="TAttribute">Attribute class (Класс атрибута).</typeparam>
+        /// <param name="enumValue">Enum value (Значение перечисления).</param>
+        /// <returns>Attribute value (Значеие атрибута).</returns>
+        public static TAttribute GetAttribute<TAttribute>(this Enum enumValue)
+            where TAttribute : Attribute
+            => enumValue.GetType()
+                .GetMember(enumValue.ToString())
+                .First()
+                .GetCustomAttribute<TAttribute>()
+            ?? null;
+
+
+        /// <summary>
+        /// Get Display attribute value (Получить значение атрибута Display).
+        /// </summary>
+        /// <typeparam name="TEnum"></typeparam>
+        /// <param name="enumValue"></param>
+        /// <returns></returns>
+        public static string GetDisplayAttr<TEnum>(this TEnum enumValue)
+            where TEnum : Enum
+            => enumValue.GetAttribute<DisplayAttribute>()?.Name
+                ?? string.Empty;
+
+
+        #endregion // РАБОТА С АТТРИБУТАМИ
     }
-
-
-
-    //###########################################################################################################################
-    #region РАБОТА С АТТРИБУТАМИ
-
-
-
-    #endregion // РАБОТА С АТТРИБУТАМИ
-
 }
